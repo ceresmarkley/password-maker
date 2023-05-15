@@ -1,7 +1,7 @@
 var generateBtn = document.querySelector("#generate");
 var possibleCharacters = "abcdefghijklmnopqrstuvwxyz";
-var upperCaseCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-var numericalCharacters = "0123456789";
+var upperCaseCharacters = "ABCDEFGHJKLMNOPQRSTUVWXYZ";
+var numericalCharacters = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 var specialCharacters = "!@#$%^&*()-_+={}[]<>?,.;:'\"/";
 
 
@@ -14,18 +14,22 @@ function getPasswordOptions() {
   );
 
   // Conditional statement to check if password length is a number. Prompts end if this evaluates false
-  if (Number.isNaN(length)) {
+  if (isNaN(length)) {
     alert('Password length must be provided as a number');
     return null;
   }
 
-  if (Number(length) < 8) {
+  if (length < 8) {
     alert('Your password must be at least 8 characters!!')
     return null;
-  } else if (Number(length) > 128) {
+  } else if (length > 128) {
     alert('Your password has too many characters!!')
     return null;
   }
+
+  var hasLowercase = confirm(
+    'Click OK to confirm including lowercase characters.'
+  );
   
   var hasUppercase = confirm(
     'Click OK to confirm including uppercase characters.'
@@ -44,8 +48,9 @@ function getPasswordOptions() {
    // Object to store user input
    var passwordOptions = {
     length: length, 
+    hasLowercase: hasLowercase,
     hasUppercase: hasUppercase,
-    hasNumbers: hasNumbers, 
+    hasNumbers: hasNumbers,
     hasSpecialCharacters: hasSpecialCharacters,
     // add more properties and values here
    }
@@ -82,20 +87,25 @@ function generatePassword() {
 
    // Conditional statement that adds array of special characters into array of possible characters based on user input
   // Push new random special character to guaranteedCharacters
+  if (options.hasLowercase) {
+    getRandom(possibleCharacters);
+  }
+
   if (options.hasUppercase) {
     possibleCharacters = possibleCharacters.concat(upperCaseCharacters)
     guaranteedCharacters.push(getRandom(upperCaseCharacters));
-  }
+  } 
 
   if (options.hasNumbers) {
     possibleCharacters = possibleCharacters.concat(numericalCharacters)
     guaranteedCharacters.push(getRandom(numericalCharacters));
-  }
+  } 
 
   if (options.hasSpecialCharacters) {
     possibleCharacters = possibleCharacters.concat(specialCharacters)
     guaranteedCharacters.push(getRandom(specialCharacters));
-  }
+  } 
+  
 
   // Loop through the guaranteed characters and add them to the result
   for (var i = 0; i < guaranteedCharacters.length; i++) {
