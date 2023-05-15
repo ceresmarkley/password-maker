@@ -1,8 +1,15 @@
 var generateBtn = document.querySelector("#generate");
-var possibleCharacters = "abcdefghijklmnopqrstuvwxyz";
-var upperCaseCharacters = "ABCDEFGHJKLMNOPQRSTUVWXYZ";
+
+var possibleCharacters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+var upperCaseCharacters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
 var numericalCharacters = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-var specialCharacters = "!@#$%^&*()-_+={}[]<>?,.;:'\"/";
+
+var specialCharacters = [ '!', '@', '#', '$', '%', '&', '*', '(', ')',
+  '_', '+', '-', '=', '[', ']', '{', '}',
+  ';', "'", ':', '"', '\\', '|', ',', '.',
+  '<', '>', '/', '?', '~'];
 
 
 function getPasswordOptions() {
@@ -77,7 +84,7 @@ function generatePassword() {
   console.log(result)
 
   // Array to store types of characters to include in password
-  var possibleCharacters = [];
+  var possibleCharacters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
   // Array to contain one of each type of chosen character to ensure each will be used
   var guaranteedCharacters = [];
@@ -88,23 +95,31 @@ function generatePassword() {
    // Conditional statement that adds array of special characters into array of possible characters based on user input
   // Push new random special character to guaranteedCharacters
   if (options.hasLowercase) {
-    getRandom(possibleCharacters);
+    guaranteedCharacters.push(getRandom(possibleCharacters));
+  } else {
+    possibleCharacters = upperCaseCharacters; 
   }
 
   if (options.hasUppercase) {
     possibleCharacters = possibleCharacters.concat(upperCaseCharacters)
     guaranteedCharacters.push(getRandom(upperCaseCharacters));
-  } 
+  } else {
+    possibleCharacters = numericalCharacters;
+  }
 
   if (options.hasNumbers) {
     possibleCharacters = possibleCharacters.concat(numericalCharacters)
     guaranteedCharacters.push(getRandom(numericalCharacters));
-  } 
+  } else {
+    possibleCharacters = specialCharacters;
+  }
 
   if (options.hasSpecialCharacters) {
     possibleCharacters = possibleCharacters.concat(specialCharacters)
     guaranteedCharacters.push(getRandom(specialCharacters));
-  } 
+  } else {
+    possibleCharacters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  }
   
 
   // Loop through the guaranteed characters and add them to the result
