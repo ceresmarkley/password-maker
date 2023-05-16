@@ -120,6 +120,11 @@ function generatePassword() {
   } else {
     possibleCharacters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
   }
+
+  if (!options.hasLowercase && !options.hasUppercase && !options.hasNumbers && !options.hasSpecialCharacters) {
+    confirm("You need values to make passwords pal! Try Again!")
+    return null;
+  }
   
 
   // Loop through the guaranteed characters and add them to the result
